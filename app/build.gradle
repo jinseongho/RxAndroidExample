@@ -1,3 +1,24 @@
+buildscript {
+    repositories {
+        maven {
+            url 'https://maven.fabric.io/public'
+        }
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        //noinspection GradleDynamicVersion
+        classpath 'io.fabric.tools:gradle:1.+'
+        classpath 'com.google.gms:google-services:3.0.0'
+        classpath 'me.tatarka:gradle-retrolambda:3.2.5'
+    }
+}
+repositories {
+    maven {
+        url 'https://github.com/uPhyca/stetho-realm/raw/master/maven-repo'
+    }
+}
+
 apply plugin: 'com.android.application'
 
 android {
@@ -16,6 +37,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+//        sourceCompatibility JavaVersion.VERSION_1_8
+//        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
