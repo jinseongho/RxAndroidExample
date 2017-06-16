@@ -24,6 +24,7 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Predicate;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
@@ -49,6 +50,31 @@ public class MainActivity extends AppCompatActivity {
                 });
 
         Flowable.just(1, 2, 3)
+                .doOnCancel(new Action() {
+                    @Override
+                    public void run() throws Exception {
+                        Log.d("MainActivity @@@ : ", "doOnCancel");
+                    }
+                })
+                .take(2)
+                .subscribe(new Consumer<Integer>() {
+                    @Override
+                    public void accept(@NonNull Integer integer) throws Exception {
+                        Log.d("MainActivity @@@ : ", "integer : " + integer);
+                    }
+                });
+
+        Flowable.just(1, 2, 3)
+                .filter(new Predicate<Integer>() {
+                    @Override
+                    public boolean test(@NonNull Integer integer) throws Exception {
+                        if (integer != 1) {
+                            return false;
+                        }
+                        Log.d("MainActivity @@@ : ", "integer : " + integer);
+                        return true;
+                    }
+                })
                 .doOnCancel(new Action() {
                     @Override
                     public void run() throws Exception {
@@ -124,5 +150,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
 }
